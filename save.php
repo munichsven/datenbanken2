@@ -8,6 +8,9 @@
 </head>
 <body>
 
+
+
+
 <?php
 
 // Verbindung zur Datenbank erstellen.
@@ -17,24 +20,33 @@ $db = mysqli_connect("localhost", "root", "", "datenbanken2");
 if (mysqli_connect_errno()) {
     printf("Verbindung fehlgeschlagen: %s\n", mysqli_connect_error());
     exit();
-} else {
-    echo "Verbindung erfolgreich!!!";
+
 }
 
 if ($club = $_GET['choosenClub']) {
-    echo "Es wurde gewählt: $club";
+    if ($club = ''){
+        echo "<script type='text/javascript'>alert('Bitte Verein auswählen!!!')</script>";
+    }else {
+        mysqli_query($db, "UPDATE fussballvereine SET Stimmen = Stimmen + 1 WHERE Verein = '" . $club . "'");
+        $countParticipant = mysqli_query($db, "Select sum(Stimmen) as Anzahl from fussballvereine");
+        $zeile = mysqli_fetch_array($countParticipant);
+        $count = $zeile['Anzahl'];
+        echo "<script type='text/javascript'>alert('Wahl erfolgreich durchgeführt. Es haben bereits ' + $count +' Personen abgestimmt!' )</script>";
 
-    $voteQuery = mysqli_query($db, "UPDATE fussballvereine SET Stimmen = Stimmen + 1 WHERE Verein = '" . $club . "'");
 
-    if (!$voteQuery) {
-        printf("Error: %s\n", mysqli_error($db));
-        exit();
+    }
+
+}elseif ($newClub = $_GET['newClub']) {
+
+    $checkQuery = mysqli_query($db, "SELECT * FROM fussballvereine where Verein = '" . $newClub . "'");
+    $zeile = mysqli_fetch_array( $checkQuery);
+    if ($zeile == ''){
+        mysqli_query($db, "INSERT INTO fussballvereine value ('" . $newClub . "',1)");
+    }else{
+        echo "<script type='text/javascript'>alert('Verein bereits vorhanden')</script>";
     }
 
 
-
-}elseif ($newClub = $_GET['newClub']){
-    $insertQuery = mysqli_query($db, "INSERT INTO fussballvereine value ('" . $newClub . "',1) ");
 }
 mysqli_close($db);
 ?>

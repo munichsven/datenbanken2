@@ -25,7 +25,7 @@ require_once ('src/jpgraph_pie3d.php');
             printf("Error: %s\n", mysqli_error($db));
             exit();
         }
-$legend = array();
+        $legend = array();
         $data = array();
         while ($zeile = mysqli_fetch_array( $getAllClubs)) {
             array_push($data,  $zeile['Stimmen']);
