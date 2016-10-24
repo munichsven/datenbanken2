@@ -23,20 +23,19 @@ if (mysqli_connect_errno()) {
 
 }
 
-if ($club = $_GET['choosenClub']) {
-    if ($club = ''){
+if (!empty($_GET['voteClub'])) {
+    if (empty($club = $_GET['choosenClub'])) {
         echo "<script type='text/javascript'>alert('Bitte Verein auswählen!!!')</script>";
-    }else {
+
+    } else {
         mysqli_query($db, "UPDATE fussballvereine SET Stimmen = Stimmen + 1 WHERE Verein = '" . $club . "'");
         $countParticipant = mysqli_query($db, "Select sum(Stimmen) as Anzahl from fussballvereine");
         $zeile = mysqli_fetch_array($countParticipant);
         $count = $zeile['Anzahl'];
         echo "<script type='text/javascript'>alert('Wahl erfolgreich durchgeführt. Es haben bereits ' + $count +' Personen abgestimmt!' )</script>";
 
-
     }
-
-}elseif ($newClub = $_GET['newClub']) {
+}elseif (!empty($_GET['addClub']) && $newClub = $_GET['newClub']) {
 
     $checkQuery = mysqli_query($db, "SELECT * FROM fussballvereine where Verein = '" . $newClub . "'");
     $zeile = mysqli_fetch_array( $checkQuery);
@@ -53,7 +52,7 @@ mysqli_close($db);
 
 
 
-<form action= ""    >
+<form action= ""   >
     <select name = "choosenClub">
         <option value = ""> </option>
         <?php
@@ -83,10 +82,12 @@ mysqli_close($db);
         ?>
 
 <input type="submit" value = "Abstimmen" />
+        <input type = 'hidden' value = 'true' name = 'voteClub'>
 </form>
 
 
 <form action= "">
+<input type = 'hidden' value = 'true' name = 'addClub'>
 <input name = 'newClub' type = 'text' value = ''>
 <input type = 'submit' value = "Hinzufuegen">
 </form>

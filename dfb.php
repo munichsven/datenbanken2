@@ -41,12 +41,12 @@
     Vorname: <input type = 'text' name = 'forename'><br>
     Nachname: <input type = 'text' name = 'surname'><br>
     e-Mail Adresse:<input type = 'eMail' name = 'mail'><br>
-    <input type = 'checkbox'  name = 'liga1' >1.Liga <br>
-    <input type = 'checkbox'  name = 'liga2' >2.Liga <br>
-    <input type = 'checkbox'  name = 'liga3' >3.Liga <br>
-    <input type = 'checkbox' value = 'true' name = 'regionalliga' >Regionalliga <br>
-    <input type = 'checkbox' value = 'true' name = 'wm' >WM 2016 <br>
-    <input type = 'checkbox' value = 'true' name = 'dfb'>DFB <br>
+    <input type = 'checkbox' value = 'true' name = 'liga[]' >1.Liga <br>
+    <input type = 'checkbox' value = 'true' name = 'liga[]' >2.Liga <br>
+    <input type = 'checkbox' value = 'true' name = 'liga[]' >3.Liga <br>
+    <input type = 'checkbox' value = 'true' name = 'liga[]' >Regionalliga <br>
+    <input type = 'checkbox' value = 'true' name = 'liga[]' >WM 2016 <br>
+    <input type = 'checkbox' value = 'true' name = 'liga[]'>DFB <br>
     <input type = 'submit' value = 'Daten speichern'>
 
 
