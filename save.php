@@ -12,8 +12,27 @@
         }
 
     $getAllClubs = mysqli_query($db, "SELECT Verein
-                                      FROM `fußballvereine` ");
+                                      FROM `fussballvereine` ");
+    echo "alle Vereine ausgeben:";
+
+    if (!$getAllClubs) {
+        printf("Error: %s\n", mysqli_error($db));
+        exit();
+    }
+    echo "<select>";
+
+    while ($zeile = mysqli_fetch_array( $getAllClubs, MYSQL_ASSOC))
+    {
+        echo "<option>". $zeile['Verein'] . "</option>";
+    }
+    echo "</select>";
+
+
     echo $getAllClubs;
+
+
+
+
 
     function insertNewClub ($db, $name)
     {
@@ -27,8 +46,8 @@
         }
     }
     // Antwort der Datenbank in ein assoziatives Array übergeben
-    $resultat = mysqli_fetch_assoc($befehl);
-    echo 
+    //$resultat = mysqli_fetch_assoc($befehl);
+   // echo
 
     // MySQL-Version aus dem Resultat-Array auslesen
     //echo "Wir arbeiten mit MySQL-Version {$resultat['version']}";
