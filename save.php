@@ -9,32 +9,34 @@
 <body>
 
 <?php
-$club = $_GET['choosenClub'];
-echo "Es wurde gewählt: $club";
 
-        // Verbindung zur Datenbank erstellen.
-        $db = mysqli_connect("localhost", "root", "", "datenbanken2");
+// Verbindung zur Datenbank erstellen.
+$db = mysqli_connect("localhost", "root", "", "datenbanken2");
 
-        // Verbindung überprüfen
-        if (mysqli_connect_errno()) {
-            printf("Verbindung fehlgeschlagen: %s\n", mysqli_connect_error());
-            exit();
-        }
-        else{
-            echo "Verbindung erfolgreich!!!";
-        }
-        $voteQuery = mysqli_query($db, "UPDATE fussballvereine SET Stimmen = Stimmen + 1 WHERE Verein = '" . $club ."'" );
+// Verbindung überprüfen
+if (mysqli_connect_errno()) {
+    printf("Verbindung fehlgeschlagen: %s\n", mysqli_connect_error());
+    exit();
+} else {
+    echo "Verbindung erfolgreich!!!";
+}
 
+if ($club = $_GET['choosenClub']) {
+    echo "Es wurde gewählt: $club";
 
+    $voteQuery = mysqli_query($db, "UPDATE fussballvereine SET Stimmen = Stimmen + 1 WHERE Verein = '" . $club . "'");
 
-        if (!$voteQuery) {
-            printf("Error: %s\n", mysqli_error($db));
-            exit();
-        }
-
-        mysqli_close($db);
+    if (!$voteQuery) {
+        printf("Error: %s\n", mysqli_error($db));
+        exit();
+    }
 
 
+
+}elseif ($newClub = $_GET['newClub']){
+    $insertQuery = mysqli_query($db, "INSERT INTO fussballvereine value ('" . $newClub . "',1) ");
+}
+mysqli_close($db);
 ?>
 
 
@@ -63,10 +65,8 @@ echo "Es wurde gewählt: $club";
 
         while ($zeile = mysqli_fetch_array( $getAllClubs))
         {
-
             echo "<option value = ". $zeile['Verein'] . "    >". $zeile['Verein'] . " ". $zeile['Stimmen'] . " </option>";
         }
-
         mysqli_close($db);
         ?>
 
@@ -74,7 +74,10 @@ echo "Es wurde gewählt: $club";
 </form>
 
 
-
+<form action= "">
+<input name = 'newClub' type = 'text' value = ''>
+<input type = 'submit' value = "Hinzufuegen">
+</form>
 
 
 
