@@ -1,4 +1,10 @@
-    <?php
+
+<script>
+
+    var selected_index = save.elements["Vereine"].selectedIndex;
+</script>
+
+<?php
         // Verbindung zur Datenbank erstellen.
         $db = mysqli_connect("localhost", "root", "", "datenbanken2");
 
@@ -11,7 +17,7 @@
             echo "Verbindung erfolgreich!!!";
         }
 
-    $getAllClubs = mysqli_query($db, "SELECT Verein
+    $getAllClubs = mysqli_query($db, "SELECT Verein, Stimmen
                                       FROM `fussballvereine` ");
     echo "alle Vereine ausgeben:";
 
@@ -19,16 +25,18 @@
         printf("Error: %s\n", mysqli_error($db));
         exit();
     }
-    echo "<select>";
+    echo "<select name = 'Vereine'>";
 
-    while ($zeile = mysqli_fetch_array( $getAllClubs, MYSQL_ASSOC))
+    echo "<option> </option>";
+    while ($zeile = mysqli_fetch_array( $getAllClubs))
     {
-        echo "<option>". $zeile['Verein'] . "</option>";
+
+        echo "<option>". $zeile['Verein'] . " ". $zeile['Stimmen'] . " </option>";
     }
     echo "</select>";
 
 
-    echo $getAllClubs;
+
 
 
 
