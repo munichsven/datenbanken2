@@ -78,9 +78,7 @@ echo "Es wurde gewählt: $club";
 
 
 
-
-
-
+<img src="3dpiegraph.php">
 
 
 </body>
