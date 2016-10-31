@@ -13,52 +13,41 @@
 
     }
 
-    if (!empty($_GET['saveData'])) {
+    if (!empty($_GET['sendMail'])) {
 
 
-        $forename = $_GET['forename'];
-        $surname = $_GET['surname'];
-        $mail = $_GET['mail'];
-        $member = $_GET['member'];
+        $subject = $_GET['subject'];
+        $message = $_GET['message'];
 
-        if ( (!empty($forename)) && (!empty($surname))&& (!empty($mail) )) {
+        echo "Betreff: " . $subject;
+        echo "<br>";
+        echo "Nachricht: " . $message;
+        echo "<br>";
 
-            if ($member == 'on'){
-                $member = 1;
+            if ($member == '1'){
+                $memberSQL = " AND a.mitglied = '1' ";
+            } else if ($member == '2'){
+                $memberSQL = " AND a.mitglied = '0' ";
+            }else if ($member == '0'){
+                $memberSQL = "";
             } else{
-                $member = 0;
+            echo "<script type='text/javascript'>alert('Bitte Personenkreis wählen')</script>";
+            }
+        $ligaString = "";
+        $first = true;
+        $ligaArray = $_GET['liga'];
+        foreach ($ligaArray as $liga) {
+            if ($first){
+                $ligaString += "b.liga = '" . $liga . "'";
+                $first = false;
+            }else {
+                $ligaString += "OR b.liga = '" . $liga . "'";
             }
 
-
-
-
-            $getAllClubs = mysqli_query($db, "INSERT INTO dfbmitglieder (id, vorname, nachname, mitglied, email) values (NULL,'" . $forename . "','" . $surname . "','" . $member . "','" . $mail . "')");
-
-            $lastInsertID = mysqli_query($db, "SELECT LAST_INSERT_ID() as lastID");
-            $zeile = mysqli_fetch_array( $lastInsertID);
-            $lastID =  $zeile['lastID'];
-
-
-            $ligaArray = $_GET['liga'];
-            foreach ($ligaArray as $liga) {
-                mysqli_query($db, "INSERT INTO whichliga (dfb_mitglied, liga) values ('" . $lastID . "','" . $liga . "')");
-            }
-
-
-            if (!$getAllClubs) {
-                printf("Error: %s\n", mysqli_error($db));
-                exit();
-            }
-            // INSERT INTO `dfbmitglieder` (`id`, `vorname`, `nachname`, `mitglied`, `email`) VALUES (NULL, 'thomas', 'kapfhammer', '0', 'thomas@thomas');
-
-
-            // mysqli_query($db, "INSERT INTO whichliga value ('" . $newClub . "',1)");
-
-            echo "<script type='text/javascript'>alert('Daten erfolgreich gespeichert!')</script>";
-
-        } else{
-            echo "<script type='text/javascript'>alert('Fornular bitte korrekt füllen!')</script>";
         }
+
+
+        "SELECT a.mail from  dfbmitglieder a join whichliga b on (b.dfbmitglied = a.id) where " . memberSQL . " AND (". $ligaString .")";
     }
     ?>
 
