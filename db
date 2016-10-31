@@ -1,2 +1,3 @@
-CREATE TABLE `datenbanken2`.`dfbmitglieder` ( `id` INT NOT NULL AUTO_INCREMENT , `vorname` VARCHAR(255) NOT NULL , `nachname` VARCHAR(255) NOT NULL , `mitglied` BOOLEAN NOT NULL , `liga1` BOOLEAN NOT NULL , `liga2` BOOLEAN NOT NULL , `liga3` BOOLEAN NOT NULL , `ligaregional` BOOLEAN NOT NULL , `wm2018` BOOLEAN NOT NULL , `dfb` BOOLEAN NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB; 
-CREATE TABLE `datenbanken2`.`newsgroup` ( `id` INT NOT NULL AUTO_INCREMENT , `liga` VARCHAR(255) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `datenbanken2`.`dfbmitglieder` ( `id` INT NOT NULL AUTO_INCREMENT , `vorname` VARCHAR(255) NOT NULL , `nachname` VARCHAR(255) NOT NULL , `mitglied` BOOLEAN NOT NULL , `email` VARCHAR(255) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `datenbanken2`.`newsgroup` ( `liga` VARCHAR(255) NOT NULL , PRIMARY KEY (`liga`)) ENGINE = InnoDB;
+CREATE TABLE `datenbanken2`.`whichliga` ( `dfb_mitglied` INT NOT NULL , `liga` VARCHAR(255) NOT NULL , UNIQUE `id` (`dfb_mitglied`, `liga`)) ENGINE = InnoDB; 
