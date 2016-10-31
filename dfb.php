@@ -13,19 +13,37 @@
 
     }
 
-    $forename = !isset($_GET['forename']);
-    $surname = !isset($_GET['surname']);
-    $mail = !isset($_GET['mail']);
-    $member = !isset($_GET['member']);
-    echo $member;
+    if (!empty($_GET['saveData'])) {
+
+
+    $forename = $_GET['forename'];
+    $surname = $_GET['surname'];
+    $mail = $_GET['mail'];
+    $member = $_GET['member'];
 
     if ( (!empty($forename)) && (!empty($surname))&& (!empty($mail) )) {
 
-        $member = 0;
+        if ($member == 'on'){
+            $member = 1;
+        } else{
+            $member = 0;
+        }
+
 
 
 
         $getAllClubs = mysqli_query($db, "INSERT INTO dfbmitglieder (id, vorname, nachname, mitglied, email) values (NULL,'" . $forename . "','" . $surname . "','" . $member . "','" . $mail . "')");
+
+        $lastInsertID = mysqli_query($db, "SELECT LAST_INSERT_ID() as lastID");
+        $zeile = mysqli_fetch_array( $lastInsertID);
+        $lastID =  $zeile['lastID'];
+
+
+        $ligaArray = $_GET['liga'];
+        foreach ($ligaArray as $liga) {
+            mysqli_query($db, "INSERT INTO whichliga (dfb_mitglied, liga) values ('" . $lastID . "','" . $liga . "')");
+        }
+
 
         if (!$getAllClubs) {
             printf("Error: %s\n", mysqli_error($db));
@@ -40,6 +58,7 @@
 
     } else{
         echo "<script type='text/javascript'>alert('Fornular bitte korrekt füllen!')</script>";
+    }
     }
   ?>
 
@@ -76,13 +95,14 @@
             }
             while ($zeile = mysqli_fetch_array( $getAllClubs))
             {
-                echo "<input type = 'checkbox' value = 'true' name = 'liga[]'>";
+                echo "<input type = 'checkbox' value = '" . $zeile['liga'] . "' name = 'liga[]'>";
                 echo "<label>" . $zeile['liga'] . "</label>";
                 echo "<br>";
             }
             ?>
 
         <input type="submit" value = "Abbonieren" />
+        <input type = 'hidden' value = 'true' name = 'saveData'>
 
     </form>
 
