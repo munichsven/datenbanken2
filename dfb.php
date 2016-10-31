@@ -13,11 +13,17 @@
 
     }
 
+    $forename = $_GET['forename'];
+    $surname = $_GET['surname'];
+    $mail = $_GET['mail'];
+    $member = $_GET['member'];
+    echo $member;
 
-    if ($forename = $_GET['forename'] && $surname = $_GET['surname'] && $mail = $_GET['mail']) {
+    if ( (!empty($forename)) && (!empty($surname))&& (!empty($mail) )) {
+
         $member = 0;
 
-        echo $forename;
+
 
         $getAllClubs = mysqli_query($db, "INSERT INTO dfbmitglieder (id, vorname, nachname, mitglied, email) values (NULL,'" . $forename . "','" . $surname . "','" . $member . "','" . $mail . "')");
 
@@ -30,8 +36,10 @@
 
            // mysqli_query($db, "INSERT INTO whichliga value ('" . $newClub . "',1)");
 
+        echo "<script type='text/javascript'>alert('Daten erfolgreich gespeichert!')</script>";
 
-
+    } else{
+        echo "<script type='text/javascript'>alert('Fornular bitte korrekt füllen!')</script>";
     }
   ?>
 
@@ -45,7 +53,10 @@
         <h1> Fußballnewsletter</h1>
         <h2> Bitte Kontaktdatein eingeben</h2>
         <label >Vorname:</label>
-        <input type = 'text' name = 'forename'><br>
+
+
+
+        <input type = 'text' name = 'forename' value = '' ><br>
         <label>Nachname:</label>
         <input type = 'text' name = 'surname'><br>
         <label>E-Mail Adresse:</label>
