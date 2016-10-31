@@ -13,10 +13,10 @@
 
     }
 
-    $forename = $_GET['forename'];
-    $surname = $_GET['surname'];
-    $mail = $_GET['mail'];
-    $member = $_GET['member'];
+    $forename = !isset($_GET['forename']);
+    $surname = !isset($_GET['surname']);
+    $mail = !isset($_GET['mail']);
+    $member = !isset($_GET['member']);
     echo $member;
 
     if ( (!empty($forename)) && (!empty($surname))&& (!empty($mail) )) {
