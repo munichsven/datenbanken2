@@ -1,16 +1,10 @@
 <html>
 <head>
-
-
-
-
-
+    <meta charset="utf-8">
+    <title>Voting</title>
 </head>
 <body>
-
-
-
-
+<h1>Verein wählen</h1>
 <?php
 // Verbindung zur Datenbank erstellen.
 $db = mysqli_connect("localhost", "root", "", "datenbanken2");
@@ -34,29 +28,20 @@ if (!empty($_GET['voteClub'])) {
     $zeile = mysqli_fetch_array( $checkQuery);
     if ($zeile == ''){
         mysqli_query($db, "INSERT INTO fussballvereine value ('" . $newClub . "',1)");
+        echo "<script type='text/javascript'>alert('Neuer Verein erfolgreich hinzugefügt!')</script>";
     }else{
         echo "<script type='text/javascript'>alert('Verein bereits vorhanden')</script>";
     }
 }
-mysqli_close($db);
+
 ?>
 
 
 
 <form action= ""   >
-    <select name = "choosenClub">
+    <select name = "choosenClub" style = "width : 200px;">
         <option value = ""> </option>
         <?php
-        // Verbindung zur Datenbank erstellen.
-        $db = mysqli_connect("localhost", "root", "", "datenbanken2");
-        // Verbindung überprüfen
-        if (mysqli_connect_errno()) {
-            printf("Verbindung fehlgeschlagen: %s\n", mysqli_connect_error());
-            exit();
-        }
-        else{
-            echo "Verbindung erfolgreich!!!";
-        }
         $getAllClubs = mysqli_query($db, "SELECT Verein, Stimmen
                                       FROM `fussballvereine` ");
         if (!$getAllClubs) {
@@ -69,22 +54,19 @@ mysqli_close($db);
         }
         mysqli_close($db);
         ?>
-
+        </select>
         <input type="submit" value = "Abstimmen" />
         <input type = 'hidden' value = 'true' name = 'voteClub'>
 </form>
 
-
 <form action= "">
     <input type = 'hidden' value = 'true' name = 'addClub'>
-    <input name = 'newClub' type = 'text' value = ''>
+    <input name = 'newClub' type = 'text' value = '' style = "width : 200px;">
     <input type = 'submit' value = "Hinzufuegen">
 </form>
 
 
-
 <img src="3dpiegraph.php">
-
 
 </body>
 </html>

@@ -15,19 +15,8 @@
 
     if ($mail = $_GET['forename'] && $surename = $_GET['surname'] && $mail = $_GET['mail']) {
 
-        echo $mail .   $surename . $mail;
-        $liga1 = $_GET['liga1'];
-        echo $liga1;
-        $liga2 = $_GET['liga2'];
-        echo $liga2;
-        $liga2 = $_GET['liga2'];
-        echo $liga2;
 
-           // mysqli_query($db, "UPDATE fussballvereine SET Stimmen = Stimmen + 1 WHERE Verein = '" . $club . "'");
-            //$countParticipant = mysqli_query($db, "Select sum(Stimmen) as Anzahl from fussballvereine");
-            //$zeile = mysqli_fetch_array($countParticipant);
-           // $count = $zeile['Anzahl'];
-           // echo "<script type='text/javascript'>alert('Wahl erfolgreich durchgeführt. Es haben bereits ' + $count +' Personen abgestimmt!' )</script>";
+
 
 
     }
@@ -37,20 +26,34 @@
 </head>
 <body>
 
-<form >
-    Vorname: <input type = 'text' name = 'forename'><br>
-    Nachname: <input type = 'text' name = 'surname'><br>
-    e-Mail Adresse:<input type = 'eMail' name = 'mail'><br>
-    <input type = 'checkbox' value = 'true' name = 'liga[]' >1.Liga <br>
-    <input type = 'checkbox' value = 'true' name = 'liga[]' >2.Liga <br>
-    <input type = 'checkbox' value = 'true' name = 'liga[]' >3.Liga <br>
-    <input type = 'checkbox' value = 'true' name = 'liga[]' >Regionalliga <br>
-    <input type = 'checkbox' value = 'true' name = 'liga[]' >WM 2016 <br>
-    <input type = 'checkbox' value = 'true' name = 'liga[]'>DFB <br>
-    <input type = 'submit' value = 'Daten speichern'>
 
 
+    <form action= ""   >
+        <label>Vorname:</label>
+        <input type = 'text' name = 'forename'><br>
+        <label>Nachname:</label>
+        <input type = 'text' name = 'surname'><br>
+        <label>e-Mail Adresse:</label>
+        <input type = 'eMail' name = 'mail'><br>
+        <input type = 'radio' name = 'member'><br>
+            <?php
+            $getAllClubs = mysqli_query($db, "SELECT liga
+                                      FROM `newsgroup` ");
+            if (!$getAllClubs) {
+                printf("Error: %s\n", mysqli_error($db));
+                exit();
+            }
+            while ($zeile = mysqli_fetch_array( $getAllClubs))
+            {
+                echo "<input type = 'checkbox' value = 'true' name = 'liga[]'>" . $zeile['liga'];
+                echo "<br>";
+            }
+            mysqli_close($db);
+            ?>
 
+        <input type="submit" value = "Abbonieren" />
+        <input type = 'hidden' value = 'true' name = 'voteClub'>
+    </form>
 
 </body>
 </html>

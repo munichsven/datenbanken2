@@ -27,7 +27,7 @@ mysqli_close($db);
 // Some data
 //$data = array(40,60,21,33);
 // Create the Pie Graph.
-$graph = new PieGraph(350,250);
+$graph = new PieGraph(500,600);
 $theme_class= new VividTheme;
 $graph->SetTheme($theme_class);
 // Set A title for the plot
@@ -35,6 +35,7 @@ $graph->title->Set("Abstimmungsergebnis:");
 // Create
 $p1 = new PiePlot3D($data);
 $p1->SetLegends($legend);
+
 $graph->Add($p1);
 $p1->ShowBorder();
 $p1->SetColor('black');
