@@ -71,14 +71,14 @@
     <form action= ""    >
         <h1> Fußballnewsletter</h1>
         <h2> Bitte Kontaktdatein eingeben</h2>
-        <label >Vorname:</label>
+        <span style="width:150px;display: inline-block;"> Vorname:</span>
 
 
 
         <input type = 'text' name = 'forename' value = '' ><br>
-        <label>Nachname:</label>
+        <span style="width:150px;display: inline-block;"> Nachname:</span>
         <input type = 'text' name = 'surname'><br>
-        <label>E-Mail Adresse:</label>
+        <span  style="width:150px;display: inline-block;">E-Mail Adresse:</span>
         <input type = 'eMail' name = 'mail'><br>
         <input type = 'checkbox'  name = 'member'>
         <label> Mitglied in einem Verein? </label>
